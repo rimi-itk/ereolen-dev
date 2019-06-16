@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
+IFS=$'\n\t'
+
+script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../ && pwd)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+# ereolen
+if [ ! -e $dir/ereolen/web ]; then
+	git clone --branch=develop https://github.com/ereolen/base $dir/ereolen/web
+fi
+if [ ! -e $dir/ereolen/web/sites/all/modules/ereol ]; then
+	git clone --branch=develop https://github.com/ereolen/ereolen $dir/ereolen/web/sites/all/modules/ereol
+fi
+
+# ereolengo
+if [ ! -e $dir/ereolengo/web ]; then
+	git clone --branch=develop https://github.com/ereolen/base $dir/ereolengo/web
+fi
+if [ ! -e $dir/ereolengo/web/sites/all/modules/breol ]; then
+	git clone --branch=develop https://github.com/ereolen/ereolengo $dir/ereolengo/web/sites/all/modules/breol
+fi
