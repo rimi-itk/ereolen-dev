@@ -12,7 +12,7 @@ git_dirs=$(find $dir -mindepth 2 -type d -name .git -printf '%h\n')
 for git_dir in $git_dirs; do
 	echo "${bold}$git_dir${normal}"
 
-	git -C $git_dir status
+	git -C $git_dir branch
 
 	echo
 done
