@@ -22,3 +22,5 @@ fi
 if [ ! -e $dir/ereolengo/web/sites/all/modules/breol ]; then
 	git clone --branch=develop https://github.com/ereolen/ereolengo $dir/ereolengo/web/sites/all/modules/breol
 fi
+
+$script_dir/undocker-sites

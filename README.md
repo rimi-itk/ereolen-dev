@@ -5,9 +5,21 @@
 ```
 
 ```sh
-./scripts/git-branch
+./scripts/undocker-sites
 ```
 
+## eReolen
+
 ```sh
-./scripts/git-status
+cd ereolen
+../scripts/checkout
+../scripts/update
+```
+
+## eReolen Go!
+
+```sh
+cd ereolengo
+../scripts/checkout
+../scripts/update
 ```
