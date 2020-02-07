@@ -48,7 +48,7 @@ fi
 
 cd $base_dir
 echo "${bold}$PWD${normal}"
-git checkout $base_dir
+git checkout $base_branch
 git pull
 echo
 

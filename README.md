@@ -4,6 +4,8 @@
 ./scripts/install-sites
 ```
 
+To remove `docker-compose`, run
+
 ```sh
 ./scripts/undocker-sites
 ```
@@ -12,6 +14,25 @@
 
 ```sh
 cd ereolen
+```
+
+Edit `web/sites/default/settings.local.php` and insert:
+
+```php
+<?php
+
+$databases['default']['default'] = [
+ 'database' => 'db',
+ 'username' => 'db',
+ 'password' => 'db',
+ 'host' => 'mariadb',
+ 'port' => '',
+ 'driver' => 'mysql',
+ 'prefix' => '',
+];
+```
+
+```sh
 ../scripts/checkout
 ../scripts/update
 ```
