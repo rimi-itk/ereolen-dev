@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
 IFS=$'\n\t'
 
 dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../ && pwd)
 
 # ereolen
-rm -r $dir/ereolen/web/.docker $dir/ereolen/web/docker-compose.yaml 2> /dev/null
+rm -r $dir/ereolen/web/.docker $dir/ereolen/web/docker-compose.yml 2> /dev/null
 
 # ereolengo
-rm -r $dir/ereolengo/web/.docker $dir/ereolengo/web/docker-compose.yaml 2> /dev/null
+rm -r $dir/ereolengo/web/.docker $dir/ereolengo/web/docker-compose.yml 2> /dev/null
