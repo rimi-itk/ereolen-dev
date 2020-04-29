@@ -33,10 +33,24 @@ $databases['default']['default'] = [
 ```
 
 ```sh
-../scripts/checkout
+../scripts/checkout develop develop
+```
+
+```sh
+docker-compose up -d
+```
+
+```sh
 ../scripts/update
 ```
 
+Running with the [Symfony binary](https://symfony.com/download):
+
+Edit `/usr/local/etc/php/7.0/php.ini` and set
+
+```ini
+openssl.cafile = "/usr/local/etc/openssl/cert.pem"
+```
 ```sh
 # Install icu4c 64
 brew reinstall https://raw.githubusercontent.com/Homebrew/homebrew-core/44895fce117ab92a44d733315b702c48dbb3898d/Formula/icu4c.rb
@@ -56,7 +70,9 @@ REMOTE_EXCLUDE=(ting styles advagg_*)
 LOCAL_PATH='web/sites/default/files'
 ```
 
-Get database:
+Install `itkdev-docker-compose` from
+[https://github.com/aakb/itkdev-docker](https://github.com/aakb/itkdev-docker)
+and run
 
 ```sh
 itkdev-docker-compose sync:db
