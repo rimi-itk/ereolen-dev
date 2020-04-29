@@ -78,6 +78,15 @@ and run
 itkdev-docker-compose sync:db
 ```
 
+## Development
+
+### With `mutagen`
+
+```sh
+brew install mutagen-io/mutagen/mutagen
+cd ereolen
+mutagen project start
+```
 ## eReolen Go!
 
 ```sh

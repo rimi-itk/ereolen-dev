@@ -1,0 +1,28 @@
+sync:
+  defaults:
+    # @see https://mutagen.io/documentation/synchronization/ignores
+    ignore:
+      paths:
+        - var
+      vcs: ~
+    # @see https://mutagen.io/documentation/synchronization/permissions
+    permissions:
+      defaultFileMode: 666
+      defaultDirectoryMode: 777
+
+  phpfpm:
+    alpha: '.'
+    beta: 'docker://ereolen-phpfpm/app'
+    # @see https://mutagen.io/documentation/synchronization#modes
+    mode: 'two-way-safe'
+
+  nginx0:
+    alpha: '.'
+    beta: 'docker://ereolen-nginx0/app'
+    mode: 'two-way-safe'
+
+beforeCreate:
+  - docker-compose --file=docker-compose.mutagen.yml up -d
+
+afterTerminate:
+  - docker-compose --file=docker-compose.mutagen.yml stop
