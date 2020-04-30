@@ -91,6 +91,17 @@ Start the show:
 cd ereolen
 symfony serve
 ```
+
+#### Utility scripts
+
+Must be run from inside a site folder (e.g. `ereolen/web`):
+
+```sh
+scripts/drush
+scripts/phpcs
+scripts/phpcbf
+```
+
 ## eReolen Go!
 
 ```sh
