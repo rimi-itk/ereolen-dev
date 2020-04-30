@@ -77,13 +77,13 @@ mutagen project start
 Run `mutagen project terminate` to stop docker containers.
 
 
-### With the [Symfony binary](https://symfony.com/download):
+### With the [Symfony binary](https://symfony.com/download)
 
 We need PHP 7.0 and want to keep this old shit to itself. Hence, we install it
 inside an isolated Homebrew area
 (cf. https://github.com/Homebrew/brew/blob/master/docs/Installation.md#multiple-installations):
 
-Run `scripts/install-php7.0` to install PHP 7.0.
+Run `scripts/php7.0-install` to install PHP 7.0.
 
 Start the show:
 
