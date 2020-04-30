@@ -2,6 +2,6 @@
 set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
 IFS=$'\n\t'
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
-$script_dir/symfony-php-context '../vendor/bin/phpcs' --standard=Drupal --extensions='php,module,inc,install,test,profile,theme,css,info,txt,md,yml' "$@"
+"$script_dir"/symfony-php-context '../vendor/bin/phpcs' --standard=Drupal --extensions='php,module,inc,install,test,profile,theme,css,info,txt,md,yml' "$@"

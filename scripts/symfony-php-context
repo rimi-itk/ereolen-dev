@@ -2,32 +2,37 @@
 set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
 IFS=$'\n\t'
 
-# set -x
-# context_dir=$(pwd)
-
+context_dir=$(pwd)
 script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 
-# # echo $context_dir
-# # echo $script_dir
-# base_dir=$(dirname $script_dir)
-# # echo ${#base_dir}
-# # @see https://www.tldp.org/LDP/abs/html/string-manipulation.html
-# # Remove $base_dir from start of $context_dir
-# context_path=${context_dir##$base_dir/}
-# # Keep only first directory in path
-# context=${context_path%%/*}
-# # echo $context
+base_dir=$(dirname $script_dir)
+# Remove $base_dir from start of $context_dir
+context_path=${context_dir##$base_dir/}
+# Keep only first directory in path
+context=${context_path%%/*}
 
-# cd $base_dir/$context/web
-
-script="$1"
-shift
-# echo "$@"
-# cd $script_dir
-
-if [ ! -f $script_dir/$script ]; then
-		(>&2 echo "Cannot find $script")
+if [ ! -d $base_dir/$context/web ]; then
+		(>&2 echo "Directory $base_dir/$context/web does not exist")
 		exit 1
 fi
 
-symfony php $script_dir/$script "$@"
+cd $base_dir/$context/web
+
+script="$1"
+shift
+
+if [ ! -f $script ]; then
+	cat <<EOF >&2
+Cannot find $script (cwd: $PWD)
+
+Running
+
+  cd $base_dir/$context && symfony composer update
+
+may fix this issue.
+
+EOF
+		exit 1
+fi
+
+symfony php $script "$@"

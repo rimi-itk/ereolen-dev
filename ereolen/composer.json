@@ -1,0 +1,9 @@
+{
+    "require": {
+        "drush/drush": "^8"
+    },
+    "require-dev": {
+        "drupal/coder": "^8.3.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
+    }
+}

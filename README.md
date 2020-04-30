@@ -44,20 +44,6 @@ docker-compose up -d
 ../scripts/update
 ```
 
-Running with the [Symfony binary](https://symfony.com/download):
-
-Edit `/usr/local/etc/php/7.0/php.ini` and set
-
-```ini
-openssl.cafile = "/usr/local/etc/openssl/cert.pem"
-```
-```sh
-# Install icu4c 64
-brew reinstall https://raw.githubusercontent.com/Homebrew/homebrew-core/44895fce117ab92a44d733315b702c48dbb3898d/Formula/icu4c.rb
-docker-compose up -d
-symfony serve
-```
-
 ### Get remote data
 
 Edit `.env.local`:
@@ -66,7 +52,7 @@ Edit `.env.local`:
 REMOTE_HOST=ereolen.dk
 REMOTE_DB_DUMP_CMD='drush --root=/data/www/ereolen_dk/htdocs --uri=ereolen.dk sql-dump --structure-tables-list="cache,cache_*,history,search_*,sessions,watchdog"'
 REMOTE_PATH='/data/www/ereolen_dk/htdocs/sites/default/files'
-REMOTE_EXCLUDE=(ting styles advagg_*)
+REMOTE_EXCLUDE=(advagg_* css ctools js languages resize styles ting)
 LOCAL_PATH='web/sites/default/files'
 ```
 
@@ -86,6 +72,24 @@ itkdev-docker-compose sync:db
 brew install mutagen-io/mutagen/mutagen
 cd ereolen
 mutagen project start
+```
+
+Run `mutagen project terminate` to stop docker containers.
+
+
+### With the [Symfony binary](https://symfony.com/download):
+
+We need PHP 7.0 and want to keep this old shit to itself. Hence, we install it
+inside an isolated Homebrew area
+(cf. https://github.com/Homebrew/brew/blob/master/docs/Installation.md#multiple-installations):
+
+Run `scripts/install-php7.0` to install PHP 7.0.
+
+Start the show:
+
+```sh
+cd ereolen
+symfony serve
 ```
 ## eReolen Go!
 
