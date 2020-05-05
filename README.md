@@ -64,6 +64,18 @@ and run
 itkdev-docker-compose sync:db
 ```
 
+# Building themes
+
+```sh
+docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/orwell/ && npm install"
+docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/orwell/ && node_modules/.bin/gulp sass"
+```
+
+```sh
+docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/wille/ && npm install"
+docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/wille/ && node_modules/.bin/gulp sass"
+```
+
 ## Development
 
 ### With `mutagen`
