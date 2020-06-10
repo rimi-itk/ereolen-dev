@@ -101,6 +101,7 @@ Start the show:
 
 ```sh
 cd ereolen
+docker-compose up -d
 symfony serve
 ```
 
@@ -112,6 +113,7 @@ Must be run from inside a site folder (e.g. `ereolen/web`):
 scripts/drush
 scripts/phpcs
 scripts/phpcbf
+scripts/symfony
 ```
 
 ## eReolen Go!
