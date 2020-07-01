@@ -64,7 +64,7 @@ and run
 itkdev-docker-compose sync:db
 ```
 
-# Building themes
+## Building themes
 
 ```sh
 docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/orwell/ && npm install"
@@ -88,21 +88,27 @@ mutagen project start
 
 Run `mutagen project terminate` to stop docker containers.
 
-
 ### With the [Symfony binary](https://symfony.com/download)
 
 We need PHP 7.0 and want to keep this old shit to itself. Hence, we install it
-inside an isolated Homebrew area
-(cf. https://github.com/Homebrew/brew/blob/master/docs/Installation.md#multiple-installations):
+inside an isolated Homebrew area (cf. [Multiple
+installations](https://github.com/Homebrew/brew/blob/master/docs/Installation.md#multiple-installations)).
 
-Run `scripts/php7.0-install` to install PHP 7.0.
+Run
+
+```sh
+scripts/php7.0-install
+```
+
+to install PHP 7.0.
 
 Start the show:
 
 ```sh
 cd ereolen
 docker-compose up -d
-symfony serve
+../scripts/php7.0-discover # Make PHP 7.0 discoverable to symfony
+../scripts/symfony serve
 ```
 
 #### Utility scripts
@@ -110,16 +116,12 @@ symfony serve
 Must be run from inside a site folder (e.g. `ereolen/web`):
 
 ```sh
-scripts/drush
-scripts/phpcs
-scripts/phpcbf
-scripts/symfony
+../../scripts/drush
+../../scripts/phpcs
+../../scripts/phpcbf
+../../scripts/symfony
 ```
 
 ## eReolen Go!
 
-```sh
-cd ereolengo
-../scripts/checkout
-../scripts/update
-```
+The same story, but in the `ereolengo` folder.
