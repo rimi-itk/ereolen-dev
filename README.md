@@ -78,16 +78,6 @@ docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/wille/ && nod
 
 ## Development
 
-### With `mutagen`
-
-```sh
-brew install mutagen-io/mutagen/mutagen
-cd ereolen
-mutagen project start
-```
-
-Run `mutagen project terminate` to stop docker containers.
-
 ### With the [Symfony binary](https://symfony.com/download)
 
 We need PHP 7.0 and want to keep this old shit to itself. Hence, we install it
