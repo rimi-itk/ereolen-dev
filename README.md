@@ -66,14 +66,18 @@ itkdev-docker-compose sync:db
 
 ## Building themes
 
+Same procedure as documented in [Building
+themes](https://github.com/ereolen/base#building-themes), but with a slightly
+different path (`/app/web/` rather than `/app/`):
+
 ```sh
-docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/orwell/ && npm install"
-docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/orwell/ && node_modules/.bin/gulp sass"
+docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/orwell install
+docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/orwell build
 ```
 
 ```sh
-docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/wille/ && npm install"
-docker-compose run --rm node bash -c "cd /app/web/sites/all/themes/wille/ && node_modules/.bin/gulp sass"
+docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/wille install
+docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/wille build
 ```
 
 ## Development
