@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -o errtrace -o noclobber -o nounset -o pipefail
+IFS=$'\n\t'
+
+script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+dir=$(cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+cd $dir
+git clone --branch=develop https://github.com/eReolen/base temp
+rsync -a temp/ web/
+rm -fr temp
+git clone --branch=develop https://github.com/eReolen/kreolen-modules web/sites/all/modules/kreol
+git clone --branch=develop https://github.com/eReolen/kreolen-themes web/sites/all/themes/kreol
+
+$script_dir/update

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -o errtrace -o noclobber -o nounset -o pipefail
+IFS=$'\n\t'
+
+dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../web && pwd)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+dirs=(
+	$dir
+	$dir/sites/all/modules/kreol
+	$dir/sites/all/themes/kreol
+)
+for d in ${dirs[@]}; do
+	echo '================================================================================'
+	echo $d
+	echo '--------------------------------------------------------------------------------'
+	git -C $d status
+	echo '================================================================================'
+done

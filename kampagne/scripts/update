@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -o errtrace -o noclobber -o nounset -o pipefail
+IFS=$'\n\t'
+
+dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../web && pwd)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+dirs=(
+	$dir
+	$dir/sites/all/modules/kreol
+	$dir/sites/all/themes/kreol
+)
+for d in ${dirs[@]}; do
+	echo '================================================================================'
+	echo $d
+	echo '--------------------------------------------------------------------------------'
+	git -C $d branch
+	git -C $d fetch
+	# git reset --hard
+	git -C $d pull
+	echo '================================================================================'
+done
+
+
+# git -C $dir checkout kreol-1.0.0
+# git -C $dir/sites/all/modules/kreol checkout kreol-1.0.0
+# git -C $dir/sites/all/themes/kreol checkout kreol-1.0.0
+
+echo "${bold}Applying patches${normal}"
+cd $dir
+# Reset files that will be patched
+git checkout $(grep --no-filename '^+++' sites/all/modules/kreol/patches/*.patch | sed -e 's#^+++ [ab]/##')
+# Apply patches
+for f in sites/all/modules/kreol/patches/*.patch; do
+  patch --strip=1 < $f
+done
+cd -
+
+cd $dir/..
+docker-compose run --rm drush --root=/app/web --yes pm-enable kreol_campaign
+docker-compose run --rm drush --root=/app/web --yes pm-disable update
+docker-compose run --rm drush --root=/app/web --yes updatedb
+docker-compose run --rm drush --root=/app/web --yes features-revert-all
+docker-compose run --rm drush --root=/app/web --yes variable-set site_frontpage 'user/login'
+# May be needed to make `secure-permissions-rebuild` work.
+docker-compose run --rm drush --root=/app/web --yes cache-clear all
+docker-compose run --rm drush --root=/app/web --yes secure-permissions-rebuild
+docker-compose run --rm drush --root=/app/web --yes cache-clear all
