@@ -17,7 +17,7 @@ brew tap drud/ddev && brew install ddev
 
 ```sh
 cd ereolen
-../scripts/git-checkout develop develop
+../scripts/git/checkout develop develop
 ddev start
 ```
 
