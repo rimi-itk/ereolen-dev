@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+# @see https://ddev.readthedocs.io/en/stable/users/extend/custom-commands/
+
+## Description: Syncs local files with remote files
+## Usage: itkdev:sync:files
+## Example: "ddev itkdev:sync:files"
+
+for f in $DDEV_APPROOT/.env $DDEV_APPROOT/.env.*; do
+    source $f
+done
+
+# @see https://github.com/itk-dev/devops_itkdev-docker/blob/develop/scripts/itkdev-docker-compose
+
+if [ -z "${REMOTE_HOST:-}" ]; then
+    (>&2 echo "${bold}Environment variable REMOTE_HOST not defined in $dot_env_file${normal}")
+    exit 1
+fi
+if [ -z "${REMOTE_PATH:-}" ]; then
+    (>&2 echo "${bold}Environment variable REMOTE_PATH not defined in $dot_env_file${normal}")
+    exit 1
+fi
+if [ -z "${LOCAL_PATH:-}" ]; then
+    (>&2 echo "${bold}Environment variable LOCAL_PATH not defined in $dot_env_file${normal}")
+    exit 1
+fi
+
+REMOTE_PATH=${REMOTE_PATH%/}
+LOCAL_PATH=${LOCAL_PATH%/}
+excludes=''
+if [ ! -z "${REMOTE_EXCLUDE:-}" ]; then
+    for i in "${REMOTE_EXCLUDE[@]}"
+    do
+        excludes+="--exclude='${i}' "
+    done
+fi
+
+eval rsync -avz ${excludes} ${REMOTE_HOST}:${REMOTE_PATH}/ ${DDEV_APPROOT}/${LOCAL_PATH}

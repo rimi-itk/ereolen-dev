@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+# @see https://ddev.readthedocs.io/en/stable/users/extend/custom-commands/
+
+## Description: Syncs local database with remote database
+## Usage: itkdev:sync:db
+## Example: "ddev itkdev:sync:db"
+
+for f in $DDEV_APPROOT/.env $DDEV_APPROOT/.env.*; do
+    source $f
+done
+
+# @see https://github.com/itk-dev/devops_itkdev-docker/blob/develop/scripts/itkdev-docker-compose
+
+if [ -z "${REMOTE_HOST:-}" ]; then
+    (>&2 echo "${bold}Environment variable REMOTE_HOST not defined in $dot_env_file${normal}")
+    exit 1
+fi
+if [ -z "${REMOTE_DB_DUMP_CMD:-}" ]; then
+    (>&2 echo "${bold}Environment variable REMOTE_DB_DUMP_CMD not defined in $dot_env_file${normal} see readme for more information about this setting")
+    exit 1
+fi
+
+if command -v pv >/dev/null 2>&1; then
+    ssh ${REMOTE_HOST} ${REMOTE_DB_DUMP_CMD} | pv | ddev mysql
+else
+    cat <<EOF
+Protip: run
+
+  brew install pv
+
+to show progress
+EOF
+    ssh ${REMOTE_HOST} ${REMOTE_DB_DUMP_CMD} | ddev mysql
+fi
+
+if [ ! -z "${SYNC_DB_POST_SCRIPT:-}" ]; then
+    eval "${SYNC_DB_POST_SCRIPT}"
+fi

@@ -9,18 +9,16 @@ normal=$(tput sgr0)
 
 # ereolen
 if [ ! -e $dir/ereolen/web ]; then
-	git clone --branch=develop https://github.com/ereolen/base $dir/ereolen/web
+  git clone --branch=develop https://github.com/ereolen/base $dir/ereolen/web
 fi
 if [ ! -e $dir/ereolen/web/sites/all/modules/ereol ]; then
-	git clone --branch=develop https://github.com/ereolen/ereolen $dir/ereolen/web/sites/all/modules/ereol
+  git clone --branch=develop https://github.com/ereolen/ereolen $dir/ereolen/web/sites/all/modules/ereol
 fi
 
 # ereolengo
 if [ ! -e $dir/ereolengo/web ]; then
-	git clone --branch=develop https://github.com/ereolen/base $dir/ereolengo/web
+  git clone --branch=develop https://github.com/ereolen/base $dir/ereolengo/web
 fi
 if [ ! -e $dir/ereolengo/web/sites/all/modules/breol ]; then
-	git clone --branch=develop https://github.com/ereolen/ereolengo $dir/ereolengo/web/sites/all/modules/breol
+  git clone --branch=develop https://github.com/ereolen/ereolengo $dir/ereolengo/web/sites/all/modules/breol
 fi
-
-$script_dir/undocker-sites
