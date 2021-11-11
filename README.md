@@ -9,6 +9,9 @@ Development environment for eReolen and eReolen GO based on [ddev](https://ddev.
 brew tap drud/ddev && brew install ddev
 ```
 
+See <https://ddev.readthedocs.io/en/stable/users/performance/> for details on
+performance.
+
 ```sh
 ./scripts/install-sites
 ```
