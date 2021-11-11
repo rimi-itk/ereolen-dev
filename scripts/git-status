@@ -2,18 +2,17 @@
 set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
 IFS=$'\n\t'
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 dir=$(pwd)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-git_dirs=$(find $dir -mindepth 2 -type d -name .git)
+git_dirs=$(find "$dir" -mindepth 2 -type d -name .git)
 
 for git_dir in $git_dirs; do
-	dir=$(dirname $git_dir)
-		echo "${bold}$dir${normal}"
-		git -C $dir rev-parse --abbrev-ref HEAD
-		git -C $dir status
+    dir=$(dirname "$git_dir")
+    echo "${bold}$dir${normal}"
+    git -C "$dir" rev-parse --abbrev-ref HEAD
+    git -C "$dir" status
 
-		echo
+    echo
 done

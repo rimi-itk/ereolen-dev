@@ -1,28 +1,8 @@
 #!/usr/bin/env bash
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-dir=$(pwd)
-bold=$(tput bold)
-normal=$(tput sgr0)
-
-base_dir=$dir/web/
-site_dir=$dir/web/sites/all/modules/?reol/
-
-if [ ! -d $base_dir/.git ] || [ ! -d $site_dir/.git ]; then
-	(>&2 echo "Cannot find web folder")
-	exit 1
-fi
-
-function drush {
-  cd $dir && docker-compose run --rm drush --root=/app/web "$@"
-}
-
-##drush --yes pm-enable ereol_base
-drush --yes updatedb
-drush --yes features-revert-all
-drush --yes cache-clear all
-drush --yes pm-disable ding_webtrekk
-# drush --yes pm-disable varnish
-
-# sudo chown -R www-data:deploy $dir/htdocs/sites/default/files
-# sudo chmod -R g+w $dir/htdocs/sites/default/files
+# ddev drush --yes pm-enable ereol_base
+ddev drush --yes updatedb
+ddev drush --yes features-revert-all
+ddev drush --yes cache-clear all
+ddev drush --yes pm-disable ding_webtrekk
+# ddev drush --yes pm-disable varnish

@@ -2,16 +2,16 @@
 set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
 IFS=$'\n\t'
 
-dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../ && pwd)
+dir=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../ && pwd)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
 git_dirs=$(find "$dir" -mindepth 2 -type d -name .git -printf '%h\n')
 
 for git_dir in $git_dirs; do
-	echo "${bold}$git_dir${normal}"
+  echo "${bold}$git_dir${normal}"
 
-	git -C "$git_dir" branch
+  git -C "$git_dir" branch
 
-	echo
+  echo
 done

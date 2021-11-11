@@ -1,59 +1,59 @@
 #!/usr/bin/env bash
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 dir=$(pwd)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
 if test "$#" -lt 2; then
-	(>&2 echo "Usage: $0 «base branch» «site branch»")
-	exit 1
+  (>&2 echo "Usage: $0 «base branch» «site branch»")
+  exit 1
 fi
 
 base_branch=$1
 shift
 site_branch=$base_branch
 if test "$#" -gt 0; then
-	site_branch=$1
-	shift
+  site_branch=$1
+  shift
 fi
 
 base_dir=$dir/web/
-site_dir=$dir/web/sites/all/modules/?reol/
+site_dirs=("$dir"/web/sites/all/modules/?reol/)
+site_dir=${site_dirs[0]}
 
-if [ ! -d $base_dir/.git ] || [ ! -d $site_dir/.git ]; then
-	(>&2 echo "Cannot find web folder")
-	exit 1
+if [ ! -d "$base_dir"/.git ] || [ ! -d "$site_dir"/.git ]; then
+  (>&2 echo "Cannot find web folder")
+  exit 1
 fi
 
 # Check that requested branches exist
 
-cd $base_dir
+cd "$base_dir" || exit
 git fetch
-git ls-remote --exit-code --heads origin $base_branch > /dev/null 2>&1
+git ls-remote --exit-code --heads origin "$base_branch" > /dev/null 2>&1
 if [ "$?" -eq "2" ]; then
-	(>&2 echo "Base branch $base_branch does not exist")
-	exit 1
+  (>&2 echo "Base branch $base_branch does not exist")
+  exit 1
 fi
 
-cd $site_dir
+cd "$site_dir" || exit
 git fetch
-git ls-remote --exit-code --heads origin $site_branch > /dev/null 2>&1
+git ls-remote --exit-code --heads origin "$site_branch" > /dev/null 2>&1
 if [ "$?" -eq "2" ]; then
-	(>&2 echo "Site branch $site_branch does not exist")
-	exit 1
+  (>&2 echo "Site branch $site_branch does not exist")
+  exit 1
 fi
 
 # Check out the branches
 
-cd $base_dir
+cd "$base_dir" || exit 1
 echo "${bold}$PWD${normal}"
-git checkout $base_branch
+git checkout "$base_branch"
 git pull
 echo
 
-cd $site_dir
+cd "$site_dir" || exit 1
 echo "${bold}$PWD${normal}"
-git checkout $site_branch
+git checkout "$site_branch"
 git pull
 echo
