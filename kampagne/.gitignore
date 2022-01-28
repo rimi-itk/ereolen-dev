@@ -1,3 +1,5 @@
 !scripts/
 web
 .env.local
+composer.lock
+vendor/

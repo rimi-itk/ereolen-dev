@@ -1,13 +1,60 @@
-# ereolen-docker
+# ereolen-dev
+
+eReolen development with [Symfony binary](https://symfony.com/download).
+
+Before starting development do what [Prerequisites and initial installation of
+stuff](#prerequisites-and-initial-installation-of-stuff) tells you what to do.
+
+
+## Development
+
+```sh
+cd ereolen
+docker run --rm --interactive --tty --volume "$PWD":/app --volume "${COMPOSER_HOME:-$HOME/.composer}":/tmp itkdev/php7.0-fpm composer install
+docker-compose up --detach
+```
+
+Pull remote database and files (cf. [Get remote data](#get-remote-data):
+
+```sh
+itkdev-docker-compose sync
+```
+
+```sh
+# Make PHP 7.0 available
+symfony local:php:refresh
+# Start the development web server
+symfony local:server:start
+```
+
+In a new shell (in the same directory):
+
+```sh
+cd web
+# Export site url for use in Drush
+export DRUSH_OPTIONS_URI=$(~/.symfony/bin/symfony run printenv SYMFONY_PROJECT_DEFAULT_ROUTE_URL)
+symfony php ../vendor/bin/drush user:login
+```
+
+## Prerequisites and initial installation of stuff
+
+We need PHP 7.0:
+
+```sh
+brew tap shivammathur/php
+brew install shivammathur/php/php@7.0
+```
+
+And [ImageMagick](https://imagemagick.org/):
+
+```sh
+brew install imagemagick
+```
+
+Install sites:
 
 ```sh
 ./scripts/install-sites
-```
-
-To remove `docker-compose`, run
-
-```sh
-./scripts/undocker-sites
 ```
 
 ## eReolen
@@ -32,12 +79,17 @@ $databases['default']['default'] = [
 ];
 ```
 
+Check out the development branches:
+
 ```sh
 ../scripts/checkout develop develop
 ```
 
 ```sh
-docker-compose up -d
+docker-compose up --detach
+# Make PHP 7.0 available
+symfony local:php:refresh
+symfony local:server:start
 ```
 
 ```sh
@@ -84,25 +136,22 @@ docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/wille build
 
 ### With the [Symfony binary](https://symfony.com/download)
 
-We need PHP 7.0 and want to keep this old shit to itself. Hence, we install it
-inside an isolated Homebrew area (cf. [Multiple
-installations](https://github.com/Homebrew/brew/blob/master/docs/Installation.md#multiple-installations)).
+We need PHP 7.0:
 
-Run
 
 ```sh
-scripts/php7.0-install
+brew tap shivammathur/php
+brew install shivammathur/php/php@7.0
 ```
-
-to install PHP 7.0.
 
 Start the show:
 
 ```sh
 cd ereolen
-docker-compose up -d
-../scripts/php7.0-discover # Make PHP 7.0 discoverable to symfony
-../scripts/symfony serve
+docker-compose up --detach
+# Make PHP 7.0 available
+symfony local:php:refresh
+symfony local:server:start
 ```
 
 #### Utility scripts
