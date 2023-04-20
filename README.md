@@ -10,7 +10,7 @@ stuff](#prerequisites-and-initial-installation-of-stuff) tells you what to do.
 
 ```sh
 cd ereolen
-docker run --rm --interactive --tty --volume "$PWD":/app --volume "${COMPOSER_HOME:-$HOME/.composer}":/tmp itkdev/php7.0-fpm composer install
+docker run --rm --interactive --tty --volume "$PWD":/app --volume "${COMPOSER_HOME:-$HOME/.composer}":/tmp itkdev/php7.4-fpm composer install
 docker-compose up --detach
 ```
 
@@ -21,7 +21,7 @@ itkdev-docker-compose sync
 ```
 
 ```sh
-# Make PHP 7.0 available
+# Make PHP 7.4 available
 symfony local:php:refresh
 # Start the development web server
 symfony local:server:start
@@ -38,11 +38,11 @@ symfony php ../vendor/bin/drush user:login
 
 ## Prerequisites and initial installation of stuff
 
-We need PHP 7.0:
+We need PHP 7.4:
 
 ```sh
 brew tap shivammathur/php
-brew install shivammathur/php/php@7.0
+brew install shivammathur/php/php@7.4
 ```
 
 And [ImageMagick](https://imagemagick.org/):
@@ -87,7 +87,7 @@ Check out the development branches:
 
 ```sh
 docker-compose up --detach
-# Make PHP 7.0 available
+# Make PHP 7.4 available
 symfony local:php:refresh
 symfony local:server:start
 ```
@@ -123,6 +123,11 @@ themes](https://github.com/ereolen/base#building-themes), but with a slightly
 different path (`/app/web/` rather than `/app/`):
 
 ```sh
+docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/pratchett install
+docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/pratchett build
+```
+
+```sh
 docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/orwell install
 docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/orwell build
 ```
@@ -136,12 +141,12 @@ docker-compose run --rm node yarn --cwd /app/web/sites/all/themes/wille build
 
 ### With the [Symfony binary](https://symfony.com/download)
 
-We need PHP 7.0:
+We need PHP 7.4:
 
 
 ```sh
 brew tap shivammathur/php
-brew install shivammathur/php/php@7.0
+brew install shivammathur/php/php@7.4
 ```
 
 Start the show:
@@ -149,7 +154,7 @@ Start the show:
 ```sh
 cd ereolen
 docker-compose up --detach
-# Make PHP 7.0 available
+# Make PHP 7.4 available
 symfony local:php:refresh
 symfony local:server:start
 ```
